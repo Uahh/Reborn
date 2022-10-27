@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/jquery@3.6.1/dist/jquery.js"></script>
+    <script src="https://unpkg.com/vue@3.2.33/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/element-plus@2.2.5/dist/index.full.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+    <!-- <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
+    <script src="https://unpkg.com/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus@2.2.5/dist/index.css" />
+    <link rel="stylesheet" href="{[ url_for('static', filename='css/uahh.css') ]}">
+    <link rel="icon" href="{[ url_for('static', filename='picture/you128.ico') ]}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, user-scalable=0">
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="app">
+        <el-row>
+            <el-col :span="24">
+                <el-menu :default-active="activeIndex" mode="horizontal" background-color="#17A0DF" text-color="#FFFFFF"
+                    active-text-color="#FFFFFF" @select="handleSelect">
+                    <el-menu-item index="1">
+                        <b>Redeploy</b>
+                    </el-menu-item>
+                    <el-menu-item index="2" style="margin-left: auto;">
+                        <b>Github</b>
+                    </el-menu-item>
+                </el-menu>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="2">
+            </el-col>
+            <el-col :span="20">
+                <!-- <list-year @sendlist="updateIdList" year="2022" :tab="this.activeName"></list-year> -->
+                <div style="transform:translate(-20px);">
+                    <world-map></world-map>
+                </div>
+            </el-col>
+            <el-col :span="2">
+            </el-col>
+        </el-row>
+    </div>
+    <script src="{[ url_for('static', filename='js/main.js') ]}"></script>
+</body>
+
+</html>

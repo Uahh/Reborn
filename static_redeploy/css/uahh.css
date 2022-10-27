@@ -1,0 +1,58 @@
+/* html {
+  background: #f5f5f5;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+body {
+  margin: 0 auto;
+} */
+
+.p {
+  padding: 0.5em 0;
+}
+
+.container {
+  margin: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.tab {
+  min-height: 800px;
+  min-width: 800px;
+}
+
+.searcher {
+  text-align: right;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  min-width: 800px;
+}
+
+.chart {
+  height: 300px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: 2px;
+  border-radius: 4px;
+  padding: 20px 20px 20px 20px;
+  margin-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.content-box {
+  padding: 10px 10px 300px;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  color: #333;
+  text-align: center;
+  line-height: 40px;
+}
