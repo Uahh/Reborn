@@ -1,7 +1,5 @@
 <template>
-    <div class="chart-transform">
-        <div class='chart' id='chart'></div>
-    </div>
+    <div class='chart' id='chart'></div>
     <div class="reborn-botton">
         <el-button @click="reborn()">重生</el-button>
     </div>
