@@ -21,7 +21,7 @@
     <div id="app">
         <el-row>
             <el-col :span="24">
-                <el-menu :default-active="activeIndex" mode="horizontal" background-color="#8B8B7A" text-color="#FFFFFF"
+                <el-menu :default-active="activeIndex" mode="horizontal" background-color="#363636" text-color="#FFFFFF"
                     active-text-color="#FFFFFF" @select="handleSelect">
                     <el-menu-item index="1">
                         <b>Reborn</b>
@@ -36,21 +36,7 @@
             <el-col :span="2">
             </el-col>
             <el-col :span="20">
-                <!-- <list-year @sendlist="updateIdList" year="2022" :tab="this.activeName"></list-year> -->
-                <div>
-                    <world-map></world-map>
-                </div>
-            </el-col>
-            <el-col :span="2">
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="2">
-            </el-col>
-            <el-col :span="20">
-                <div>
-                    <!-- <world-map></world-map> -->
-                </div>
+                <world-map></world-map>
             </el-col>
             <el-col :span="2">
             </el-col>

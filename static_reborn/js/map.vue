@@ -62,7 +62,9 @@ module.exports = {
                 '南美洲': 0,
                 '南极洲': 0
             }],
-            rebornLog: []
+            rebornLog: [],
+            zoom: 1.25,
+            center: [17.228331, 26.3351]
         };
     },
     mounted: function () {
@@ -103,6 +105,7 @@ module.exports = {
             // console.log(result)
 
             this.coordinate = result['position']
+            this.center = result['position']
             this.times += 1
             let temp_dict = {}
             temp_dict['times'] = this.times
@@ -114,26 +117,29 @@ module.exports = {
             this.rebornCount[0][this.continent_dict[result['continent']]] += 1
 
             this.showTable = true
+            this.zoom = 1.5
             this.myChart.setOption(this.option())
         },
         option() {
             return {
-                backgroundColor: '#000',
+                backgroundColor: '#E8E8E8',
                 geo: {
                     map: 'world',
                     roam: true,
+                    zoom: this.zoom,
                     label: {
                         emphasis: {
                             show: false,
                         }
                     },
+                    center: this.center,
                     tooltip: {
                         show: true
                     },
                     // silent: true,
                     itemStyle: {
                         normal: {
-                            areaColor: '#323c48',
+                            areaColor: '#CFCFCF',
                             borderColor: '#111'
                         },
                         emphasis: {
