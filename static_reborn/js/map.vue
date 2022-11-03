@@ -1,5 +1,35 @@
 <template>
-    <div class='chart' id='chart'></div>
+    <div class="chart-transform">
+        <div class='chart' id='chart'></div>
+    </div>
+    <div class="reborn-botton">
+        <el-button @click="reborn()">重生</el-button>
+    </div>
+    <div v-show="showTable">
+        <div class="count-table">
+            <el-table :data="rebornCount" :table-layout="auto" style="width: 100%; font-weight: bold;">
+                <el-table-column prop="times" label="重生次数" style="width: auto;" />
+                <el-table-column prop="非洲" label="非洲" width="auto" />
+                <el-table-column prop="欧洲" label="欧洲" width="auto" />
+                <el-table-column prop="亚洲" label="亚洲" width="auto" />
+            </el-table>
+        </div>
+        <div class="count-table">
+            <el-table show-header :data="rebornCount" :table-layout="auto" style="width: 100%; font-weight: bold;">
+                <el-table-column prop="北美洲" label="北美洲" width="auto" />
+                <el-table-column prop="南美洲" label="南美洲" width="auto" />
+                <el-table-column prop="大洋洲" label="大洋洲" width="auto" />
+                <el-table-column prop="南极洲" label="南极洲" width="auto" />
+            </el-table>
+        </div>
+    </div>
+    <div v-show="showTable" class="reborn-info">
+        <el-table :data="rebornLog" :table-layout="auto" stripe style="width: 100%;">
+            <el-table-column prop="times" label="重生次数" sortable style="width: auto;" />
+            <el-table-column prop="continent" label="地区" sortable width="auto" />
+            <el-table-column prop="cn" label="国家" sortable width="auto" />
+        </el-table>
+    </div>
 </template>
  
 <script>
@@ -8,72 +38,99 @@ module.exports = {
         return {
             protocol: 'http',
             url: window.location.host,
-            showFlag: false,
-            initDataNum: 10,
-            curData: {},
-            keys: [],
             data: {},
+            coordinate: [104.195397, 35.86166],
+            percent_arr: null,
+            showTable: false,
+            times: 0,
+            continent_dict: {
+                'AF': '非洲',
+                'EU': '欧洲',
+                'AS': '亚洲',
+                'OA': '大洋洲',
+                'NA': '北美洲',
+                'SA': '南美洲',
+                'AN': '南极洲'
+            },
+            rebornCount: [{
+                'times': 0,
+                '非洲': 0,
+                '欧洲': 0,
+                '亚洲': 0,
+                '大洋洲': 0,
+                '北美洲': 0,
+                '南美洲': 0,
+                '南极洲': 0
+            }],
+            rebornLog: []
         };
     },
-    // props: {
-    //     year: null,
-    //     tab: null
-    // },
     mounted: function () {
         this.getData()
-        // let dataList
-        // $.ajax({
-        //     type: "get",
-        //     url: this.protocol + '://' + this.url + '/animationlist/getData?year=' + this.year,
-        //     async: false,
-        //     success: function (result) {
-        //         dataList = eval('[' + result + ']')[0]
-        //     }
-        // })
-        // this.data = dataList
-        // // console.log(this.data)
-        // this.keys = Object.keys(this.data)
-        // for (let i = 0; i < 10; i++) {
-        //     this.curData[this.keys[i]] = this.data[this.keys[i]]
-        // }
-        // this.showFlag = true
     },
     methods: {
         getData() {
             var that = this
             $.ajax({
                 type: "get",
-                url: this.protocol + '://' + this.url + '/redeploy/getData',
+                url: this.protocol + '://' + this.url + '/reborn/getData',
                 async: false,
                 success: function (result) {
-                    result = eval('[' + result + ']')[0]
+                    result = eval(result)
+                    that.data = result
                 }
             })
             this.init()
+            // console.log(this.data)
         },
         init() {
             this.myChart = echarts.init(document.getElementById('chart'))
             this.myChart.setOption(this.option());
         },
+        reborn() {
+            let total = 100000
+            if (this.percent_arr == null) {
+                this.percent_arr = new Array();
+                for (let i = 0; i < this.data.length; i++) {
+                    let percent = this.data[i]['birth_rate'] * 1000
+                    for (let j = 0; j < percent; j++) {
+                        this.percent_arr.push(i)
+                    }
+                }
+            }
+            let rand = Math.floor(Math.random() * total)
+            let result = this.data[this.percent_arr[rand]]
+            // console.log(result)
+
+            this.coordinate = result['position']
+            this.times += 1
+            let temp_dict = {}
+            temp_dict['times'] = this.times
+            temp_dict['cn'] = result['cn']
+            temp_dict['continent'] = this.continent_dict[result['continent']]
+            this.rebornLog.unshift(temp_dict)
+
+            this.rebornCount[0]['times'] = this.times
+            this.rebornCount[0][this.continent_dict[result['continent']]] += 1
+
+            this.showTable = true
+            this.myChart.setOption(this.option())
+        },
         option() {
             return {
                 backgroundColor: '#000',
-                // title: {
-                //     text: '10000000 GPS Points',
-                //     left: 'center',
-                //     textStyle: {
-                //         color: '#fff'
-                //     }
-                // },
                 geo: {
                     map: 'world',
                     roam: true,
                     label: {
                         emphasis: {
-                            show: false
+                            show: false,
                         }
                     },
-                    silent: true,
+                    tooltip: {
+                        show: true
+                    },
+                    // silent: true,
                     itemStyle: {
                         normal: {
                             areaColor: '#323c48',
@@ -90,7 +147,7 @@ module.exports = {
                     geoIndex: 0,
                     zlevel: 1,
                     data: [
-                        [-75.440806, 40.652083, 100],
+                        this.coordinate
                     ],
                     renderItem(params, api) {
                         const coord = api.coord([
@@ -185,4 +242,5 @@ module.exports = {
 </script>
  
 <style>
+
 </style>

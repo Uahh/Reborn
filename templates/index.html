@@ -9,7 +9,6 @@
     <script src="https://unpkg.com/element-plus@2.2.5/dist/index.full.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <script src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
-    <!-- <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
     <script src="https://unpkg.com/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-plus@2.2.5/dist/index.css" />
     <link rel="stylesheet" href="{[ url_for('static', filename='css/uahh.css') ]}">
@@ -22,10 +21,10 @@
     <div id="app">
         <el-row>
             <el-col :span="24">
-                <el-menu :default-active="activeIndex" mode="horizontal" background-color="#17A0DF" text-color="#FFFFFF"
+                <el-menu :default-active="activeIndex" mode="horizontal" background-color="#8B8B7A" text-color="#FFFFFF"
                     active-text-color="#FFFFFF" @select="handleSelect">
                     <el-menu-item index="1">
-                        <b>Redeploy</b>
+                        <b>Reborn</b>
                     </el-menu-item>
                     <el-menu-item index="2" style="margin-left: auto;">
                         <b>Github</b>
@@ -38,8 +37,19 @@
             </el-col>
             <el-col :span="20">
                 <!-- <list-year @sendlist="updateIdList" year="2022" :tab="this.activeName"></list-year> -->
-                <div style="transform:translate(-20px);">
+                <div>
                     <world-map></world-map>
+                </div>
+            </el-col>
+            <el-col :span="2">
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="2">
+            </el-col>
+            <el-col :span="20">
+                <div>
+                    <!-- <world-map></world-map> -->
                 </div>
             </el-col>
             <el-col :span="2">

@@ -10,7 +10,14 @@ const options = {
         this.tableData = []
     },
     methods: {
-        
+        handleSelect(key) {
+            if (key == 1) {
+                location.href = this.protocol + "://" + this.url + '/reborn';
+            }
+            else if (key == 2) {
+                window.open("https://github.com/Uahh/Reborn")
+            }
+        },
     },
     moduleCache: {
         vue: Vue
@@ -29,7 +36,7 @@ const options = {
         document.head.insertBefore(style, ref);
     },
     components: {
-        'world-map': Vue.defineAsyncComponent(() => loadModule('../static_redeploy/js/map.vue', options)),
+        'world-map': Vue.defineAsyncComponent(() => loadModule('../static_reborn/js/map.vue', options)),
     },
 }
 
