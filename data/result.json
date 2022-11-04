@@ -115,7 +115,7 @@
     {
         "cn": "阿根廷",
         "en": "Argentina",
-        "continent": "AS",
+        "continent": "SA",
         "position": [
             -63.61667199999999,
             -38.416097
@@ -677,8 +677,8 @@
         "en": "Georgia",
         "continent": "AS",
         "position": [
-            -82.9000751,
-            32.1656221
+            43.711615,
+            41.999919
         ],
         "birth_rate": 0.0354
     },
