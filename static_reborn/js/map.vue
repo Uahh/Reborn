@@ -5,7 +5,7 @@
     </div>
     <div v-show="showTable">
         <div class="count-table">
-            <el-table :data="rebornCount" :table-layout="auto" style="width: 100%; font-weight: bold;">
+            <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
                 <el-table-column prop="times" label="重生次数" style="width: auto;" />
                 <el-table-column prop="非洲" label="非洲" width="auto" />
                 <el-table-column prop="欧洲" label="欧洲" width="auto" />
@@ -13,7 +13,7 @@
             </el-table>
         </div>
         <div class="count-table">
-            <el-table show-header :data="rebornCount" :table-layout="auto" style="width: 100%; font-weight: bold;">
+            <el-table show-header :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
                 <el-table-column prop="北美洲" label="北美洲" width="auto" />
                 <el-table-column prop="南美洲" label="南美洲" width="auto" />
                 <el-table-column prop="大洋洲" label="大洋洲" width="auto" />
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div v-show="showTable" class="reborn-info">
-        <el-table :data="rebornLog" :table-layout="auto" stripe style="width: 100%;">
+        <el-table :data="rebornLog" :table-layout="auto" size="small" stripe style="width: 100%;">
             <el-table-column prop="times" label="重生次数" sortable style="width: auto;" />
             <el-table-column prop="continent" label="地区" sortable width="auto" />
             <el-table-column prop="cn" label="国家" sortable width="auto" />
