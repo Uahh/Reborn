@@ -12,7 +12,11 @@ print('Waiting...')
 
 @app.route('/reborn', methods=["GET", "POST"])
 def index():
-    return render_template('index.html')
+    lang = request.args.get('lang')
+    return render_template(
+        'index.html',
+        lang=lang
+    )
 
 @app.route('/reborn/getData', methods=["GET"])
 def get_data():

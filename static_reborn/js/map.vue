@@ -1,32 +1,66 @@
 <template>
     <div class='chart' id='chart'></div>
-    <div class="reborn-botton">
-        <el-button @click="reborn()">重生</el-button>
-    </div>
-    <div v-show="showTable">
-        <div class="count-table">
-            <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
-                <el-table-column prop="times" label="重生次数" style="width: auto;" />
-                <el-table-column prop="非洲" label="非洲" width="auto" />
-                <el-table-column prop="欧洲" label="欧洲" width="auto" />
-                <el-table-column prop="亚洲" label="亚洲" width="auto" />
+    <div v-if="lang == 'en'">
+        <div class="reborn-botton">
+            <el-button @click="reborn()">Reborn</el-button>
+        </div>
+        <div v-show="showTable">
+            <div class="count-table">
+                <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
+                    <el-table-column prop="times" label="Frequency" style="width: auto;" />
+                    <el-table-column prop="非洲" label="AF" width="auto" />
+                    <el-table-column prop="欧洲" label="EU" width="auto" />
+                    <el-table-column prop="亚洲" label="AS" width="auto" />
+                </el-table>
+            </div>
+            <div class="count-table">
+                <el-table show-header :data="rebornCount" :table-layout="auto" size="small"
+                    style="width: 100%; font-weight: bold;">
+                    <el-table-column prop="北美洲" label="NA" width="auto" />
+                    <el-table-column prop="南美洲" label="SA" width="auto" />
+                    <el-table-column prop="大洋洲" label="OA" width="auto" />
+                    <el-table-column prop="南极洲" label="AN" width="auto" />
+                </el-table>
+            </div>
+        </div>
+        <div v-show="showTable" class="reborn-info">
+            <el-table :data="rebornLog" :table-layout="auto" size="small" stripe style="width: 100%;">
+                <el-table-column prop="times" label="Frequency" sortable style="width: auto;" />
+                <el-table-column prop="continent" label="Continent" sortable width="auto" />
+                <el-table-column prop="name" label="Country" sortable width="auto" />
             </el-table>
         </div>
-        <div class="count-table">
-            <el-table show-header :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
-                <el-table-column prop="北美洲" label="北美洲" width="auto" />
-                <el-table-column prop="南美洲" label="南美洲" width="auto" />
-                <el-table-column prop="大洋洲" label="大洋洲" width="auto" />
-                <el-table-column prop="南极洲" label="南极洲" width="auto" />
+    </div>
+    <div v-else>
+        <div class="reborn-botton">
+            <el-button @click="reborn()">重生</el-button>
+        </div>
+        <div v-show="showTable">
+            <div class="count-table">
+                <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
+                    <el-table-column prop="times" label="重生次数" style="width: auto;" />
+                    <el-table-column prop="非洲" label="非洲" width="auto" />
+                    <el-table-column prop="欧洲" label="欧洲" width="auto" />
+                    <el-table-column prop="亚洲" label="亚洲" width="auto" />
+                </el-table>
+            </div>
+            <div class="count-table">
+                <el-table show-header :data="rebornCount" :table-layout="auto" size="small"
+                    style="width: 100%; font-weight: bold;">
+                    <el-table-column prop="北美洲" label="北美洲" width="auto" />
+                    <el-table-column prop="南美洲" label="南美洲" width="auto" />
+                    <el-table-column prop="大洋洲" label="大洋洲" width="auto" />
+                    <el-table-column prop="南极洲" label="南极洲" width="auto" />
+                </el-table>
+            </div>
+        </div>
+        <div v-show="showTable" class="reborn-info">
+            <el-table :data="rebornLog" :table-layout="auto" size="small" stripe style="width: 100%;">
+                <el-table-column prop="times" label="重生次数" sortable style="width: auto;" />
+                <el-table-column prop="continent" label="地区" sortable width="auto" />
+                <el-table-column prop="name" label="国家" sortable width="auto" />
             </el-table>
         </div>
-    </div>
-    <div v-show="showTable" class="reborn-info">
-        <el-table :data="rebornLog" :table-layout="auto" size="small" stripe style="width: 100%;">
-            <el-table-column prop="times" label="重生次数" sortable style="width: auto;" />
-            <el-table-column prop="continent" label="地区" sortable width="auto" />
-            <el-table-column prop="cn" label="国家" sortable width="auto" />
-        </el-table>
     </div>
 </template>
  
@@ -37,11 +71,11 @@ module.exports = {
             protocol: 'http',
             url: window.location.host,
             data: {},
-            coordinate: [104.195397, 35.86166],
-            percent_arr: null,
+            coordinate: [104.195397, 35.86166], //China
+            percentArray: null,
             showTable: false,
             times: 0,
-            continent_dict: {
+            continentDict: {
                 'AF': '非洲',
                 'EU': '欧洲',
                 'AS': '亚洲',
@@ -64,6 +98,9 @@ module.exports = {
             zoom: 1.25,
             center: [17.228331, 26.3351]
         };
+    },
+    props: {
+        lang: '',
     },
     mounted: function () {
         this.getData()
@@ -89,17 +126,17 @@ module.exports = {
         },
         reborn() {
             let total = 100000
-            if (this.percent_arr == null) {
-                this.percent_arr = new Array();
+            if (this.percentArray == null) {
+                this.percentArray = new Array();
                 for (let i = 0; i < this.data.length; i++) {
                     let percent = this.data[i]['birth_rate'] * 1000
                     for (let j = 0; j < percent; j++) {
-                        this.percent_arr.push(i)
+                        this.percentArray.push(i)
                     }
                 }
             }
             let rand = Math.floor(Math.random() * total)
-            let result = this.data[this.percent_arr[rand]]
+            let result = this.data[this.percentArray[rand]]
             // console.log(result)
 
             this.coordinate = result['position']
@@ -107,15 +144,15 @@ module.exports = {
             this.times += 1
             let temp_dict = {}
             temp_dict['times'] = this.times
-            temp_dict['cn'] = result['cn']
-            temp_dict['continent'] = this.continent_dict[result['continent']]
+            temp_dict['name'] = this.lang == 'en' ? result['en'] : result['cn']
+            temp_dict['continent'] = this.lang == 'en' ? result['continent'] : this.continentDict[result['continent']]
             this.rebornLog.unshift(temp_dict)
 
             this.rebornCount[0]['times'] = this.times
-            this.rebornCount[0][this.continent_dict[result['continent']]] += 1
+            this.rebornCount[0][this.continentDict[result['continent']]] += 1
 
             this.showTable = true
-            this.zoom = 1.5
+            this.zoom = 2.0
             this.myChart.setOption(this.option())
         },
         option() {

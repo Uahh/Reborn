@@ -5,16 +5,18 @@ const options = {
             url: window.location.host,
         };
     },
-    mounted: function () {
-        this.idList = []
-        this.tableData = []
-    },
     methods: {
         handleSelect(key) {
-            if (key == 1) {
+            if (key == '1') {
                 location.href = this.protocol + "://" + this.url + '/reborn';
             }
-            else if (key == 2) {
+            else if (key == '2-1') {
+                location.href = this.protocol + "://" + this.url + '/reborn';
+            }
+            else if (key == '2-2') {
+                location.href = this.protocol + "://" + this.url + '/reborn?lang=en';
+            }
+            else if (key == '3') {
                 window.open("https://github.com/Uahh/Reborn")
             }
         },

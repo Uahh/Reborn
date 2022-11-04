@@ -24,14 +24,13 @@ body {
   border: 2px;
   border-radius: 4px;
   margin: 20px 0px 10px 0px;
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
 }
 
 .count-table {
   display: flex;
   justify-content: center;
 }
-
 
 .reborn-info {
   display: flex;

@@ -59,7 +59,6 @@ def add_position():
 
     with open('./data/data.json', 'w', encoding='utf-8') as json_file:
         json_file.write(json.dumps(data2, ensure_ascii=False, indent=4))
-        # json_file.write(json.dumps(data2, ensure_ascii=False, indent=4).replace('    ', '').replace('\n', '').replace('\n\r', ''))
 
 def add_continent():
     with open('./data/raw_continent.json', encoding='utf-8') as json_file:
@@ -101,8 +100,6 @@ def get_country_proportion():
     for key in data.keys():
         birth_of_year = data[key]['population'] * data[key]['birth_rate']
         total_birth += birth_of_year
-        # if key == 'CN':
-        #     a = 0
     result.append({
         'total_birth': total_birth
     })
@@ -117,7 +114,6 @@ def get_country_proportion():
         result.append(temp)
         with open('./data/result.json', 'w', encoding='utf-8') as json_file:
             json_file.write(json.dumps(result, ensure_ascii=False, indent=4))
-            # json_file.write(json.dumps(result, ensure_ascii=False, indent=4).replace('    ', '').replace('\n', '').replace('\n\r', ''))
     # a = 0
     # for i in result[1:]:
     #     a += i['birth_rate']

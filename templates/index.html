@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/jquery@3.6.1/dist/jquery.js"></script>
     <script src="https://unpkg.com/vue@3.2.33/dist/vue.global.prod.js"></script>
     <script src="https://unpkg.com/element-plus@2.2.5/dist/index.full.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="https://unpkg.com/echarts@5/dist/echarts.min.js"></script>
     <script src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
     <script src="https://unpkg.com/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-plus@2.2.5/dist/index.css" />
@@ -24,10 +24,16 @@
                 <el-menu :default-active="activeIndex" mode="horizontal" background-color="#363636" text-color="#FFFFFF"
                     active-text-color="#FFFFFF" @select="handleSelect">
                     <el-menu-item index="1">
-                        <b>Reborn</b>
+                        Reborn
                     </el-menu-item>
-                    <el-menu-item index="2" style="margin-left: auto;">
-                        <b>Github</b>
+                    <el-sub-menu index="2">
+                        <template #title>Language</template>
+                        <el-menu-item index="2-1">Chinese</el-menu-item>
+                        <el-menu-item index="2-2">English</el-menu-item>
+                        </el-sub-menu>
+                    </el-sub-menu>
+                    <el-menu-item index="3" style="margin-left: auto;">
+                        Github
                     </el-menu-item>
                 </el-menu>
             </el-col>
@@ -36,7 +42,7 @@
             <el-col :span="2">
             </el-col>
             <el-col :span="20">
-                <world-map></world-map>
+                <world-map lang="{[ lang ]}"></world-map>
             </el-col>
             <el-col :span="2">
             </el-col>
