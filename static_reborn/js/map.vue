@@ -2,27 +2,31 @@
     <div class='chart' id='chart'></div>
     <div v-if="lang == 'en'">
         <div class="reborn-botton">
-            <el-button @click="reborn()">Reborn</el-button>
+            <el-button :disabled="dataLoading" @click="reborn()">Reborn</el-button>
+            <el-button :disabled="dataLoading" @click="rebornInfinitely()">{{ endlessReborning ? "ENOUUUGH" : "Reborn Infinitely" }}</el-button>
         </div>
-        <div v-show="showTable">
-            <div class="count-table">
-                <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
-                    <el-table-column prop="times" label="Frequency" style="width: auto;" />
-                    <el-table-column prop="非洲" label="AF" width="auto" />
-                    <el-table-column prop="欧洲" label="EU" width="auto" />
-                    <el-table-column prop="亚洲" label="AS" width="auto" />
-                </el-table>
+        <el-collapse-transition>
+            <div v-show="showTable">
+                <div class="count-table">
+                    <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
+                        <el-table-column prop="times" label="Frequency" style="width: auto;" />
+                        <el-table-column prop="非洲" label="AF" width="auto" />
+                        <el-table-column prop="欧洲" label="EU" width="auto" />
+                        <el-table-column prop="亚洲" label="AS" width="auto" />
+                    </el-table>
+                </div>
+                <div class="count-table">
+                    <el-table show-header :data="rebornCount" :table-layout="auto" size="small"
+                        style="width: 100%; font-weight: bold;">
+                        <el-table-column prop="北美洲" label="NA" width="auto" />
+                        <el-table-column prop="南美洲" label="SA" width="auto" />
+                        <el-table-column prop="大洋洲" label="OA" width="auto" />
+                        <el-table-column prop="南极洲" label="AN" width="auto" />
+                    </el-table>
+                </div>
             </div>
-            <div class="count-table">
-                <el-table show-header :data="rebornCount" :table-layout="auto" size="small"
-                    style="width: 100%; font-weight: bold;">
-                    <el-table-column prop="北美洲" label="NA" width="auto" />
-                    <el-table-column prop="南美洲" label="SA" width="auto" />
-                    <el-table-column prop="大洋洲" label="OA" width="auto" />
-                    <el-table-column prop="南极洲" label="AN" width="auto" />
-                </el-table>
-            </div>
-        </div>
+        </el-collapse-transition>
+
         <div v-show="showTable" class="reborn-info">
             <el-table :data="rebornLog" :table-layout="auto" size="small" stripe style="width: 100%;">
                 <el-table-column prop="times" label="Frequency" sortable style="width: auto;" />
@@ -33,27 +37,30 @@
     </div>
     <div v-else>
         <div class="reborn-botton">
-            <el-button @click="reborn()">重生</el-button>
-        </div>
-        <div v-show="showTable">
-            <div class="count-table">
-                <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
-                    <el-table-column prop="times" label="重生次数" style="width: auto;" />
-                    <el-table-column prop="非洲" label="非洲" width="auto" />
-                    <el-table-column prop="欧洲" label="欧洲" width="auto" />
-                    <el-table-column prop="亚洲" label="亚洲" width="auto" />
-                </el-table>
+            <el-button :disabled="dataLoading" @click="reborn()">重生</el-button>
+            <el-button :disabled="dataLoading" @click="rebornInfinitely()">{{ endlessReborning ? "摇了我8" : "无限重生" }}</el-button>
+        </div>    
+        <el-collapse-transition>
+            <div v-show="showTable">
+                <div class="count-table">
+                    <el-table :data="rebornCount" :table-layout="auto" size="small" style="width: 100%; font-weight: bold;">
+                        <el-table-column prop="times" label="重生次数" style="width: auto;" />
+                        <el-table-column prop="非洲" label="非洲" width="auto" />
+                        <el-table-column prop="欧洲" label="欧洲" width="auto" />
+                        <el-table-column prop="亚洲" label="亚洲" width="auto" />
+                    </el-table>
+                </div>
+                <div class="count-table">
+                    <el-table show-header :data="rebornCount" :table-layout="auto" size="small"
+                        style="width: 100%; font-weight: bold;">
+                        <el-table-column prop="北美洲" label="北美洲" width="auto" />
+                        <el-table-column prop="南美洲" label="南美洲" width="auto" />
+                        <el-table-column prop="大洋洲" label="大洋洲" width="auto" />
+                        <el-table-column prop="南极洲" label="南极洲" width="auto" />
+                    </el-table>
+                </div>
             </div>
-            <div class="count-table">
-                <el-table show-header :data="rebornCount" :table-layout="auto" size="small"
-                    style="width: 100%; font-weight: bold;">
-                    <el-table-column prop="北美洲" label="北美洲" width="auto" />
-                    <el-table-column prop="南美洲" label="南美洲" width="auto" />
-                    <el-table-column prop="大洋洲" label="大洋洲" width="auto" />
-                    <el-table-column prop="南极洲" label="南极洲" width="auto" />
-                </el-table>
-            </div>
-        </div>
+        </el-collapse-transition>
         <div v-show="showTable" class="reborn-info">
             <el-table :data="rebornLog" :table-layout="auto" size="small" stripe style="width: 100%;">
                 <el-table-column prop="times" label="重生次数" sortable style="width: auto;" />
@@ -96,7 +103,9 @@ module.exports = {
             }],
             rebornLog: [],
             zoom: 1.25,
-            center: [17.228331, 26.3351]
+            center: [17.228331, 26.3351],
+            dataLoading: true,
+            endlessReborning: null
         };
     },
     props: {
@@ -106,6 +115,16 @@ module.exports = {
         this.getData()
     },
     methods: {
+        rebornInfinitely() {
+            if (this.endlessReborning) {
+                clearInterval(this.endlessReborning)
+                this.endlessReborning = null;
+            } else {
+                this.endlessReborning = setInterval(() => {
+                    this.reborn()
+                }, 0);
+            }
+        },
         getData() {
             var that = this
             $.ajax({
@@ -123,42 +142,45 @@ module.exports = {
         init() {
             this.myChart = echarts.init(document.getElementById('chart'))
             this.myChart.setOption(this.option());
-        },
-        reborn() {
-            let total = 100000
-            if (this.percentArray == null) {
-                this.percentArray = new Array();
+            this.percentArray = new Array();
+            setTimeout(() => {
                 for (let i = 0; i < this.data.length; i++) {
                     let percent = this.data[i]['birth_rate'] * 1000
                     for (let j = 0; j < percent; j++) {
                         this.percentArray.push(i)
+                        this.dataLoading = false;
                     }
                 }
-            }
-            let rand = Math.floor(Math.random() * total)
-            let result = this.data[this.percentArray[rand]]
-            // console.log(result)
+            }, 0);
+        },
+        reborn() {
+            setTimeout(() => {
+                const total = 100000
+                const rand = Math.floor(Math.random() * total)
+                const result = this.data[this.percentArray[rand]]
 
-            this.coordinate = result['position']
-            this.center = result['position']
-            this.times += 1
-            let temp_dict = {}
-            temp_dict['times'] = this.times
-            temp_dict['name'] = this.lang == 'en' ? result['en'] : result['cn']
-            temp_dict['continent'] = this.lang == 'en' ? result['continent'] : this.continentDict[result['continent']]
-            this.rebornLog.unshift(temp_dict)
+                this.coordinate = result['position']
+                this.center = result['position']
+                this.times += 1
+                let temp_dict = {}
+                temp_dict['times'] = this.times
+                temp_dict['name'] = this.lang == 'en' ? result['en'] : result['cn']
+                temp_dict['continent'] = this.lang == 'en' ? result['continent'] : this.continentDict[result['continent']]
+                this.rebornLog.unshift(temp_dict)
 
-            this.rebornCount[0]['times'] = this.times
-            this.rebornCount[0][this.continentDict[result['continent']]] += 1
+                this.rebornCount[0]['times'] = this.times
+                this.rebornCount[0][this.continentDict[result['continent']]] += 1
 
-            this.showTable = true
-            this.zoom = 2.0
-            this.myChart.setOption(this.option())
+                this.showTable = true
+                this.zoom = 2.0
+                    this.myChart.setOption(this.option())
+            }, 0);
         },
         option() {
             return {
                 backgroundColor: '#E8E8E8',
                 geo: {
+                    animation: this.endlessReborning===null,
                     map: 'world',
                     roam: true,
                     zoom: this.zoom,
