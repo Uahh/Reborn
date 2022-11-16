@@ -5,6 +5,9 @@
 
 <img src="https://user-images.githubusercontent.com/40496762/199866242-828cd42a-9c4b-451d-a03c-ff1a00d07443.png" width=30% />
 
+## API
+感谢[Aziteee](https://github.com/Aziteee)提供的[API](https://api.azite.cn/reborn)  
+
 
 ## 数据来源
 https://data.worldbank.org/indicator/SP.DYN.CBRT.IN  
